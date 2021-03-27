@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from user import views
-from runner.views import project, envvar, fixture
+from runner.views import project, envvar, fixture,case
 
 urlpatterns = [
     path(r"projects", project.ProjectView.as_view()),
@@ -46,5 +46,16 @@ urlpatterns = [
         "put": "update",
         "delete": "destroy"
     })),
+    path(r"cases", case.CaseViewSet.as_view({
+        "get": "list",
+        "post": "create"
+    })),
+    path(r"cases/<int:pk>", case.CaseViewSet.as_view({
+        "get": "retrieve",
+        "put": "update",
+        "delete": "destroy"
+    })),
+    path(r"cases/<int:pk>/result", case.case_result),
+    path(r"cases/<int:pk>/copy", case.copy_case),
 
 ]
