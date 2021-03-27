@@ -14,3 +14,13 @@ REGISTER_SUCCESS = {
     "success": True,
     "msg": "数据请求成功"
 }
+REGISTER_PROJECT_EXIST = {
+    "code": "0101",
+    "success": False,
+    "msg":"项目名已存在"
+}
+SYSTEM_ERROR = {
+    "code": "9999",
+    "success": False,
+    "msg": "System Error"
+}
