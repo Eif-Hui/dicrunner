@@ -27,9 +27,9 @@ class UserInfo(BaseTable):
         verbose_name = "用户信息"
         db_table = "UserInfo"
 
-    username = models.CharField('用户名', max_length=20, unique=True, null=False)
-    password = models.CharField('登陆密码', max_length=100, null=False)
-    email = models.EmailField('用户邮箱', unique=True, null=False)
+    username = models.CharField('用户名', max_length=20, unique=True, null=False,help_text='用户名')
+    password = models.CharField('登陆密码', max_length=100, null=False,help_text='登陆密码')
+    email = models.EmailField('用户邮箱', unique=True, null=False,help_text='用户邮箱')
 
 
 class UserToken(BaseTable):
