@@ -23,16 +23,56 @@ class ProjectViewSet(ModelViewSet):
 
 class ProjectView(APIView):
 
+    def post(self,request):
+        """
+        项目新增
+        :param request:
+        :return:
+        """
+        try:
+            project_name = request.data["name"]
+            #env_config = request.data["envConfig"]
+        except KeyError:
+            return Response(rep.KEY_MISS)
+        if Project.objects.filter(name=project_name).first():
+            return Response(rep.REGISTER_PROJECT_EXIST)
+        serializer = ProjectSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(rep.REGISTER_SUCCESS)
+        else:
+            return Response(rep.SYSTEM_ERROR)
+
+
+    def put(self,request):
+        """
+        项目编辑
+        :param request:
+        :return:
+        """
+        project_id = request.GET.get("id")
+        projects_info = Project.objects.get(id = project_id)
+        rep.REGISTER_SUCCESS["projectInfo"] = {
+            "id":projects_info.id,
+            "name":projects_info.name,
+            "env_config":projects_info.env_config
+        }
+        return Response(rep.REGISTER_SUCCESS)
+
     def get(self,request):
         """
         :param request:
-        :return: 项目信息
+        :return: 根据项目id信息
         """
         project_id = request.GET.get("id")
-        print(project_id)
-        projects_info = Project.objects.filter(id = project_id)
-        rep.KEY_MISS["projectInfo"] = projects_info.id
-        return Response(projects_info.id)
+        projects_info = Project.objects.get(id = project_id)
+        rep.REGISTER_SUCCESS["projectInfo"] = {
+            "id":projects_info.id,
+            "name":projects_info.name,
+            "env_config":projects_info.env_config
+        }
+        return Response(rep.REGISTER_SUCCESS)
 
 
 @api_view(['GET'])
